@@ -27,7 +27,7 @@ static def buildDate() {
 def appVersionCode = Integer.valueOf(System.getenv("TRAVIS_BUILD_NUMBER") ?: 0)
 
 android {
-    compileSdkVersion 34
+    compileSdk 35
 
     signingConfigs {
         travis {
@@ -41,7 +41,7 @@ android {
     defaultConfig {
         applicationId "com.zeevox.octo"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 35
 
         if (System.getenv("TRAVIS") == "true") {
             versionCode appVersionCode
@@ -52,8 +52,8 @@ android {
                 }
             }
         } else {
-            versionCode 22
-            versionName "3.5.0"
+            versionCode 23
+            versionName "3.6.0"
             android.applicationVariants.configureEach { variant ->
                 variant.outputs.configureEach {
                     outputFileName = "Ocquarium-${versionName}-${buildDate()}-release.apk"
@@ -85,13 +85,21 @@ android {
         }
     }
     namespace 'com.zeevox.octo'
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {
-    implementation 'androidx.annotation:annotation:1.8.2'
+    implementation 'androidx.annotation:annotation:1.9.1'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.1.0'
     implementation 'androidx.preference:preference:1.2.1'
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
